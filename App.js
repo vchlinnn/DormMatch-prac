@@ -1,11 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import Constants from 'expo-constants'
+import TopBar from './components/TopBar'
+import axios from 'axios'
 
 export default function App() {
+
+  const [users, setUsers] = useState([])
+  const [currentIndex, setCurrentIndex] = useState(0)
+  
+  async function fetchUsers() {
+    try {
+      const {data} = await axios.get('https://randomuser.me/api/')
+      setUsers(data.results)
+      // console.log(data.results)
+    } catch (error) {
+      console.log(error)
+      Alert.alert('Error getting users', '', [{text: 'Retry', onPress: () => fetchUsers()}])
+    }
+  }
+
+  useEffect(() => {
+    fetchUsers()
+  }, [])
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <TopBar />
     </View>
   );
 }
@@ -13,8 +34,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: Constants.statusBarHeight
   },
 });
