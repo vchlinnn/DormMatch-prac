@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react'
+import { StyleSheet, View, Alert } from 'react-native'
 import Constants from 'expo-constants'
 import TopBar from './components/TopBar'
 import axios from 'axios'
+import SwipeableImage from './components/SwipeableImage'
 
 export default function App() {
 
@@ -27,6 +28,9 @@ export default function App() {
   return (
     <View style={styles.container}>
       <TopBar />
+      <View style={styles.swipes}>
+        {users.length > 1 && <SwipeableImage user={users[currentIndex]} />}
+      </View>
     </View>
   );
 }
@@ -34,6 +38,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Constants.statusBarHeight
+    marginTop: Constants.statusBarHeight,
+  },
+  swipes: {
+    flex: 1,
+    padding: 10,
+    paddingTop: 8,
+    shadowColor: '#000',
   },
 });
