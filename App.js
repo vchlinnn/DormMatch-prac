@@ -12,7 +12,7 @@ export default function App() {
 
   async function fetchUsers() {
     try {
-      const { data } = await axios.get('https://randomuser.me/api/');
+      const { data } = await axios.get('https://randomuser.me/api/?results=5000');
       setUsers(data.results);
       // console.log(data.results)
     } catch (error) {
@@ -29,7 +29,7 @@ export default function App() {
     <View style={styles.container}>
       <TopBar />
       <View style={styles.swipes}>
-        {users.length > 0 ? (
+        {users.length > 1 ? (
           <SwipeableImage user={users[currentIndex]} />
         ) : (
           <Text>Loading...</Text>
